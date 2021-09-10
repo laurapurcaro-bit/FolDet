@@ -39,8 +39,72 @@ rectum, seminal vesicle, thyroid gland, skeletal muscle, vocal fold, synovial ti
 uterine tube, ureter, urethra, uterus, soft tissue, cecum and tongue.
 
 ## FolDet algorithm
+Python3 and the OpenCV package were widely used in this project since it is an appropriate language for
+image processing. As a result, cv2.imread() was used to read all .png images for improved synchronization with the rest of the functions. 
+It is worth noting that it reads the images in the inverted BGR channels.
+In this study, OpenSlide was utilized for reading the WSI files, and Pillow for basic image manipulation in Python. 
+NumPy was used for fast, concise, powerful processing of images as NumPy arrays. 
+Scikit-image heavily works with a wide variety of image functionality,such as morphology, thresholding, and edge detection. 
 
+Step 1: Install required libraries
 
 ```python
-
+import cv2
+import openslide as op
+import matplotlib.pyplot as plt
+import numpy as np
+import math
+import os
+import pandas as pd
+from PIL import Image, ImageEnhance
+from scipy import ndimage
+import util
+import shutil
 ```
+
+Step 2: Define the path
+
+```python
+# Get current working directory
+current_path = os.path.abspath(os.getcwd())
+
+
+# At the same level of "Folds detection", input the folder's NAME (not the path) with all the WSI.mrxs
+path_with_wsi = current_path + '\\' + str(input('Input your Whole slide images folder NAME (ex. .mrxs): '))
+
+
+# Create new folder where all results will be stored
+new_path = current_path + '\\' + 'Folds detection'
+
+# If "Folds detection" folder does not exist, create it
+if not os.path.exists(new_path):
+    os.makedirs(new_path, exist_ok=True)
+
+print('Successfully created: ', new_path)
+print('Your WSI path for good: ', path_with_wsi)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
