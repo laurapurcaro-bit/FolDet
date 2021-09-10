@@ -1,4 +1,4 @@
-
+                          # WORK IN PROGRESS
 # FolDet
 Folds detection in Whole slides images
 
@@ -101,7 +101,7 @@ for filename in os.listdir(path_with_wsi):
         # Open the image
         wsi = op.OpenSlide(file_path)
         # Decide at what level we want to process the slides
-        #print(wsi.level_count) # It is counts how many levels has the image (9 in this case)
+        #print(wsi.level_count) # It is counts how many levels the image has (9 in this case)
         #print(wsi.level_downsamples) # It is counts the 2^n (n=level) for each 9 levels; 
         # for e.g the first value will be: 2^0= 1.0
         slide_level = 5
