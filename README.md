@@ -46,6 +46,7 @@ In this study, OpenSlide was utilized for reading the WSI files, and Pillow for 
 NumPy was used for fast, concise, powerful processing of images as NumPy arrays. 
 Scikit-image heavily works with a wide variety of image functionality,such as morphology, thresholding, and edge detection. 
 
+###### Pre-processing step
 Step 1: Install required libraries
 
 ```python
@@ -84,7 +85,71 @@ print('Successfully created: ', new_path)
 print('Your WSI path for good: ', path_with_wsi)
 ```
 
+Step 3: Convert all WSI from .mrxs to .png
 
+```python
+
+#  WSI name should follow the pattern: "study n. 4"
+
+# For folds
+for filename in os.listdir(path_with_wsi):
+    if filename.endswith(".mrxs"):
+        # Create file path
+        file_path = os.path.join(path_with_wsi, filename)
+        
+        
+        # Open the image
+        wsi = op.OpenSlide(file_path)
+        # Decide at what level we want to process the slides
+        #print(wsi.level_count) # It is counts how many levels has the image (9 in this case)
+        #print(wsi.level_downsamples) # It is counts the 2^n (n=level) for each 9 levels; 
+        # for e.g the first value will be: 2^0= 1.0
+        slide_level = 5
+    
+        #####################################################
+        # Read region in order to process the image with numpy
+        # Crop the image based on where the tissue starts
+        # Remove background from slides (not scanned area)
+        ######################################################
+
+        # Starting point of the tissue scanned
+        x = wsi.properties[op.PROPERTY_NAME_BOUNDS_X]
+        y = wsi.properties[op.PROPERTY_NAME_BOUNDS_Y]
+    
+        # Dimension of the image of coords x and y
+        dim = (int(int(x)),int(int(y)))
+
+        # Maximum width and height of just tissue scanned dimension
+        w,h = wsi.properties[op.PROPERTY_NAME_BOUNDS_WIDTH], wsi.properties[op.PROPERTY_NAME_BOUNDS_HEIGHT]
+        # Downsampling factor
+        wh = (int(int(w)/2**slide_level),int(int(h)/2**slide_level))
+        # Reading the image
+        img = wsi.read_region(dim,slide_level,wh)
+    
+        # Convert into an array
+        image = np.array(img)
+    
+        # Remove black background
+        image[image[:,:,3]!=255] = 255
+    
+        # Convert the original RGBA image into RGB image
+        RGB_image = cv2.cvtColor(image, cv2.COLOR_RGBA2RGB)
+    
+        # Save .png image
+        # Create new folder
+        wsi_png_dir = new_path + r'\WSI png'
+        
+        if not os.path.exists(wsi_png_dir):
+            os.makedirs(wsi_png_dir, exist_ok=True)
+            
+        # Remove format of original image (.mrxs) in the string
+        new = filename.split(".")
+        new.pop()
+        new_filename = '.'.join(new)
+        
+        print('Step 1: Saving {}.png to folder WSI png'.format(new_filename))
+        plt.imsave(wsi_png_dir + '\\' + str(new_filename) + '.png', RGB_image)
+```
 
 
 
