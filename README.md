@@ -39,7 +39,7 @@ Levels are numbered from 0 (highest resolution) to `level_count - 1` (lowest res
 the full-resolution plane while resolutions 1 to 8 are reduced along the X and Y dimensions using a consistent
 downsampling factor.
 
-![Example of pyramidal image with nine levels of resolution](https://github.com/laurapurcaro-bit/FolDet/main/assets/Images/Level wsi.jpeg)
+![Example of pyramidal image with nine levels of resolution](https://github.com/laurapurcaro-bit/FolDet/tree/main/Images/Level wsi.jpeg)
 
 ```python
 
