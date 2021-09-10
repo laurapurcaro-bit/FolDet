@@ -1,3 +1,4 @@
+
 # FolDet
 Folds detection in Whole slides images
 
@@ -21,27 +22,25 @@ images. Likewise, the huge diversity of tissue types present in this dataset giv
 study, confirming that, although difficult, it is possible to establish a generalized algorithm that works
 optimally for the whole dataset.
 
-## Whole slide images properties
-A WSI usually has an extremely high magnification, such as 20x or 40x. Because of the great magnification,
-whole slide pictures are often rather huge. The maximum file size for a single whole-slide image in our dataset
-was 3.0 GB, with an average over 1 GBA microscope scans a slide and merges tiny pictures into a huge picture
-to form a whole-slide picture. Merging scanned square tiles into a whole-slide image and combining scanned
-strips into a resultant whole-slide image are examples of techniques. Because of the high file size, each
-image's height and width ranged from 13,347 to 256,256 pixels, with an average of 73,154 pixels.
-OpenSlide is a Python interface to the OpenSlide library that allows you to read whole-slide photos with ease.
-These photos can be tens of gigabytes in size when uncompressed, making them difficult to interpret using
-normal tools or libraries meant for pictures that can be quickly uncompressed into RAM. Whole-slide images
-are often multi-resolution and OpenSlide allows reading a small amount of image data at the resolution
-closest to a specific zoom level.
 
-OpenSlide library has an important function called `level_count` that read the number of levels in the slide.
-Levels are numbered from 0 (highest resolution) to `level_count - 1` (lowest resolution). Resolution 0 is
-the full-resolution plane while resolutions 1 to 8 are reduced along the X and Y dimensions using a consistent
-downsampling factor.
+## Dataset
+In order to have an algorithm that correctly detects folds, 220 Whole Slide Images H&E stained **with folds** were used and
+220 Whole Slide Images H&E stained **with NO folds** were included to see if the algorithm was accurate with folds-free cases.
+In summray, a total of 440 WSI were used for the creation of the algorithm:
+- 220 Whole slides images H&E stained labeled as 'with folds' (bad quality) from pathologist
+- 220 Whole slides images H&E stained labeled as 'no folds' (good quality) from pathologist
 
-![Example of pyramidal image with nine levels of resolution](https://github.com/laurapurcaro-bit/FolDet/tree/main/Images/Level wsi.jpeg)
+They represented a total of 58 different type of tissues corresponding to 413 patients, including aorta,
+appendix, artery, eye, breast, small intestine, duodenum, endometrium, epiglottis, gallbladder, bile duct,
+brain, cerebrum, urinary bladder, skin, heart, ileum, jejunum, jaw, bone marrow, colon, larynx, liver, lung,
+lymph nodes, stomach, oral cavity, oral mucosa, nose, paranasal sinus, nervous system, kidney, esophagus,
+ear, omentum, ovary, pancreas, parotid gland, penis, peritoneum, pharynx, placenta, cervix uteri, prostate,
+rectum, seminal vesicle, thyroid gland, skeletal muscle, vocal fold, synovial tissue, tonsils and adenoids,
+uterine tube, ureter, urethra, uterus, soft tissue, cecum and tongue.
+
+## FolDet algorithm
+
 
 ```python
 
 ```
-
