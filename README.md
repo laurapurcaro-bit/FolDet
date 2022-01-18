@@ -150,8 +150,8 @@ for filename in os.listdir(path_with_wsi):
 ```
 At the end we have a result that looks like this:
 <p align="center">
-  <link rel="stylesheet" href="style.css">
-<img src="Images/study n.3.png?raw=true" class="imgcropped" width="300" height="400"><img src="Images/no crop study no.3.png?raw=true" class="imgcropped" width="200" height="400">
+  
+<img class="imgcropped" href="style.css" src="Images/study n.3.png?raw=true" width="300" height="400"><img class="imgcropped" href="style.css" src="Images/no crop study no.3.png?raw=true" width="200" height="400">
   <br>
   <em>Figure 1. Cropped and no cropped WSI</em>
 </p>
