@@ -150,10 +150,9 @@ for filename in os.listdir(path_with_wsi):
 ```
 At the end we have a result that looks like this:
 <p align="center">
-<img src="Images/yellow.png?raw=true" width="200" height="200"><img src="Images/selected_34.png?raw=true" width="200" height="200">
-  <img src="Images/mask_study n.172.png?raw=true" width="200" height="200"><img src="Images/result_study n.172.png?raw=true" width="200" height="200">
+<img src="Images/study n.3.png?raw=true" width="200" height="200"><img src="Images/no crop study no.3.png?raw=true" width="200" height="200">
   <br>
-  <em>Figure 2. yellow mask</em>
+  <em>Figure 1. Cropped and no cropped WSI</em>
 </p>
 
 
