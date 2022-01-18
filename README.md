@@ -85,11 +85,9 @@ print('Successfully created: ', new_path)
 print('Your WSI path for good: ', path_with_wsi)
 ```
 
-Step 3: Convert all WSI from .mrxs to .png
+Step 3: Convert all WSI from .mrxs to .png and crop out extra background
 
 ```python
-
-#  WSI name should follow the pattern: "study n. 4"
 
 # For folds
 for filename in os.listdir(path_with_wsi):
@@ -150,8 +148,13 @@ for filename in os.listdir(path_with_wsi):
         print('Step 1: Saving {}.png to folder WSI png'.format(new_filename))
         plt.imsave(wsi_png_dir + '\\' + str(new_filename) + '.png', RGB_image)
 ```
-
-
+At the end we have a result that looks like this:
+<p align="center">
+<img src="Images/yellow.png?raw=true" width="200" height="200"><img src="Images/selected_34.png?raw=true" width="200" height="200">
+  <img src="Images/mask_study n.172.png?raw=true" width="200" height="200"><img src="Images/result_study n.172.png?raw=true" width="200" height="200">
+  <br>
+  <em>Figure 2. yellow mask</em>
+</p>
 
 
 
