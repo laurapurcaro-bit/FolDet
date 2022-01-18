@@ -151,8 +151,11 @@ for filename in os.listdir(path_with_wsi):
 At the end we have a result that looks like this:
 <p align="center">
   <kbd>
-    <img style='border:1px solid #000000' src="Images/study n.3.png?raw=true" width="300" height="400"/><img src="Images/no crop study no.3.png?raw=true" width="200" height="400" border="1"/>
-   </kbd>
+    <img style='border:1px solid #000000' src="Images/study n.3.png?raw=true" width="300" height="400"/>
+  </kbd>
+  <kbd>
+    <img src="Images/no crop study no.3.png?raw=true" width="200" height="400" border="1"/>
+  </kbd>
   <br>
   <em>Figure 1. Cropped and no cropped WSI</em>
 </p>
