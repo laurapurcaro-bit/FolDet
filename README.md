@@ -84,7 +84,7 @@ b) Crop and keep only tissue area and do downscaling.
 In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
 
 <p align="center">
-<img src="Images/contrast stretch workflow.png?raw=true" width="100" height="400"><img src="Images/CS.png?raw=true" width="200" height="200">
+<img src="Images/contrast stretch workflow.PNG?raw=true" width="300" height="400"><img src="Images/CS.PNG?raw=true" width="400" height="300">
   <br>
   <em>Figure 2. Contrast stretch workflow</em>
 </p>
