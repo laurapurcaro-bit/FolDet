@@ -41,9 +41,9 @@ uterine tube, ureter, urethra, uterus, soft tissue, cecum and tongue.
 ## FolDet algorithm
 <ul>
   <li>Based on Python3 and OpenCV library</li>
-  <li>```OpenSlide``` was utilized for reading WSI, and Pillow for basic image manipulation in Python.</li>
-  <li>```NumPy``` was used for fast, concise, powerful processing of images as NumPy arrays. </li>
-  <li>```Scikit-image``` heavily works with a wide variety of image functionality, such as morphology, thresholding, and edge detection.</li>
+  <li>OpenSlide was utilized for reading WSI, and Pillow for basic image manipulation in Python.</li>
+  <li>NumPy was used for fast, concise, powerful processing of images as NumPy arrays. </li>
+  <li>Scikit-image heavily works with a wide variety of image functionality, such as morphology, thresholding, and edge detection.</li>
 </ul>
 
 # Aim
@@ -59,19 +59,29 @@ Developing color filters that can be used to highlight and detect tissue areas c
 3. The amount of H&E (purple and pink) staining can vary greatly from slide to slide.
 4. Folds colors vary from purple and pink to dark red due to different reasons i.e., thickness, staining duration, blood infiltration in tissue.
 
+The algorithm can be divided into:
+  - WSI pre-processing
+  - Filter application
+  - WSI classification
 
-At the end we have a result that looks like this:
-<p align="center">
-  <kbd>
-    <img style='border:1px solid #000000' src="Images/study n.3.png?raw=true" width="300" height="400"/>
-  </kbd>
-  <kbd>
-    <img src="Images/no crop study no.3.png?raw=true" width="200" height="400" border="1"/>
-  </kbd>
-  <br>
-  <em>Figure 1. Cropped and no cropped WSI</em>
-</p>
+## 1. Whole slide images pre-processing
+a) Retrieve current working directory with ```os.path.abspath(os.getcwd())```
+b) Crop and keep only tissue area and do downscaling.
+    example:
+  <p align="center">
+    <kbd>
+      <img style='border:1px solid #000000' src="Images/study n.3.png?raw=true" width="300" height="400"/>
+    </kbd>
+    <kbd>
+      <img src="Images/no crop study no.3.png?raw=true" width="200" height="400" border="1"/>
+    </kbd>
+    <br>
+    <em>Figure 1. Cropped and no cropped WSI</em>
+  </p>
 
+## 2. Filter application
+# a) Approach 1: Contrast stretch
+In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
 
 
 
