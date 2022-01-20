@@ -39,115 +39,27 @@ rectum, seminal vesicle, thyroid gland, skeletal muscle, vocal fold, synovial ti
 uterine tube, ureter, urethra, uterus, soft tissue, cecum and tongue.
 
 ## FolDet algorithm
-Python3 and the OpenCV package were widely used in this project since it is an appropriate language for
-image processing. As a result, cv2.imread() was used to read all .png images for improved synchronization with the rest of the functions. 
-It is worth noting that it reads the images in the inverted BGR channels.
-In this study, OpenSlide was utilized for reading the WSI files, and Pillow for basic image manipulation in Python. 
-NumPy was used for fast, concise, powerful processing of images as NumPy arrays. 
-Scikit-image heavily works with a wide variety of image functionality,such as morphology, thresholding, and edge detection. 
+<ul>
+  <li>Based on Python3 and OpenCV library</li>
+  <li>```OpenSlide``` was utilized for reading WSI, and Pillow for basic image manipulation in Python.</li>
+  <li>```NumPy``` was used for fast, concise, powerful processing of images as NumPy arrays. </li>
+  <li>```Scikit-image``` heavily works with a wide variety of image functionality, such as morphology, thresholding, and edge detection.</li>
+</ul>
 
-###### Pre-processing step
-Step 1: Install required libraries
+# Aim
+<ul>
+  <li>Visualize and detect tissue folds from low-pixel resolution WSI (.png images) and use this information to determine bad quality tissue slides from good quality tissue slides for diagnosis.</li>
+  <li>Since the amount of dye absorbed by the tissue is a function of its thickness, the tissue folds being thicker will appear darker (lower luminance) and will express stronger color saturation compared to adjacent non-folded areas. Hence, three color enhancement methods based on the luminance and saturation properties of tissue folds will be described.</li>
+  <li>The best from the three proposed algorithms could be optimized for a future use into the diagnostic lab routine as an upgrade for the current quality control process.</li>
+</ul>
 
-```python
-import cv2
-import openslide as op
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-import os
-import pandas as pd
-from PIL import Image, ImageEnhance
-from scipy import ndimage
-import util
-import shutil
-```
-
-Step 2: Define the path
-
-```python
-# Get current working directory
-current_path = os.path.abspath(os.getcwd())
+Developing color filters that can be used to highlight and detect tissue areas can be challenging for a variety of reasons, including:
+1. Filters need to be general enough to work across all slides in the dataset.
+2. Filters should handle issues such as variations in shadows and lighting.
+3. The amount of H&E (purple and pink) staining can vary greatly from slide to slide.
+4. Folds colors vary from purple and pink to dark red due to different reasons i.e., thickness, staining duration, blood infiltration in tissue.
 
 
-# At the same level of "Folds detection", input the folder's NAME (not the path) with all the WSI.mrxs
-path_with_wsi = current_path + '\\' + str(input('Input your Whole slide images folder NAME (ex. .mrxs): '))
-
-
-# Create new folder where all results will be stored
-new_path = current_path + '\\' + 'Folds detection'
-
-# If "Folds detection" folder does not exist, create it
-if not os.path.exists(new_path):
-    os.makedirs(new_path, exist_ok=True)
-
-print('Successfully created: ', new_path)
-print('Your WSI path for good: ', path_with_wsi)
-```
-
-Step 3: Convert all WSI from .mrxs to .png and crop out extra background
-
-```python
-
-# For folds
-for filename in os.listdir(path_with_wsi):
-    if filename.endswith(".mrxs"):
-        # Create file path
-        file_path = os.path.join(path_with_wsi, filename)
-        
-        
-        # Open the image
-        wsi = op.OpenSlide(file_path)
-        # Decide at what level we want to process the slides
-        #print(wsi.level_count) # It is counts how many levels the image has (9 in this case)
-        #print(wsi.level_downsamples) # It is counts the 2^n (n=level) for each 9 levels; 
-        # for e.g the first value will be: 2^0= 1.0
-        slide_level = 5
-    
-        #####################################################
-        # Read region in order to process the image with numpy
-        # Crop the image based on where the tissue starts
-        # Remove background from slides (not scanned area)
-        ######################################################
-
-        # Starting point of the tissue scanned
-        x = wsi.properties[op.PROPERTY_NAME_BOUNDS_X]
-        y = wsi.properties[op.PROPERTY_NAME_BOUNDS_Y]
-    
-        # Dimension of the image of coords x and y
-        dim = (int(int(x)),int(int(y)))
-
-        # Maximum width and height of just tissue scanned dimension
-        w,h = wsi.properties[op.PROPERTY_NAME_BOUNDS_WIDTH], wsi.properties[op.PROPERTY_NAME_BOUNDS_HEIGHT]
-        # Downsampling factor
-        wh = (int(int(w)/2**slide_level),int(int(h)/2**slide_level))
-        # Reading the image
-        img = wsi.read_region(dim,slide_level,wh)
-    
-        # Convert into an array
-        image = np.array(img)
-    
-        # Remove black background
-        image[image[:,:,3]!=255] = 255
-    
-        # Convert the original RGBA image into RGB image
-        RGB_image = cv2.cvtColor(image, cv2.COLOR_RGBA2RGB)
-    
-        # Save .png image
-        # Create new folder
-        wsi_png_dir = new_path + r'\WSI png'
-        
-        if not os.path.exists(wsi_png_dir):
-            os.makedirs(wsi_png_dir, exist_ok=True)
-            
-        # Remove format of original image (.mrxs) in the string
-        new = filename.split(".")
-        new.pop()
-        new_filename = '.'.join(new)
-        
-        print('Step 1: Saving {}.png to folder WSI png'.format(new_filename))
-        plt.imsave(wsi_png_dir + '\\' + str(new_filename) + '.png', RGB_image)
-```
 At the end we have a result that looks like this:
 <p align="center">
   <kbd>
