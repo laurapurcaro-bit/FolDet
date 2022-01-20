@@ -108,6 +108,17 @@ In the contrast stretch approach we tried to take advantage of low intensity pix
 #### a)	BGR2HSV
 To produce an image that is only in the saturation channel, we must first convert our BGR image to HSV color space using cv2.COLOR BGR2HSV method and then split the HSV channels and pick the saturation one using ```hsv[:,:,1]```.
 
+<p align="center">
+<img src="Images/HSV images.png?raw=true" width="700" height="400">
+  <br>
+  <em>Figure 2. HSV workflow</em>
+</p>
+
+<p align="center">
+<img src="Images/HSV workflow.PNG?raw=true" width="270" height="400"><img src="Images/HSV_GIFT.gif" width="300" height="500" />
+  <br>
+  <em>Figure 2. HSV workflow</em>
+</p>
 
 
 
