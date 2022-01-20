@@ -84,13 +84,29 @@ b) Crop and keep only tissue area and do downscaling.
 In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
 
 <p align="center">
-<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400">
+<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400"><img src="Images/CS_mod.PNG?raw=true" width="550" height="400">
   <br>
   <em>Figure 2. Contrast stretch workflow</em>
 </p>
 
+### b) Approach 2: HSV
+<ul>
+  <li>In HSV, it is easier to represent a color than in RGB color-space:</li>
+  <ol>
+    <li>Unlike RGB, HSV separates luma, or the image intensity, from chroma or the color information.</li>
+    <li>The RGB color information is usually much noisier than the HSV information</li>
+  </ol>
 
+  <li>One of the most efficient ways to increase an image's color contrast while keeping its hue (color) is to convert the image's original RGB color to HSV (hue, saturation, value) color space and use only the saturation channel or luminance portion of its pixel.</li>
+  <li>Saturation and luminance enhancement are traditionally accomplished by performing forward and reverse color transformations between the RGB and HSV color spaces:</li>
+  <ol>
+    <li>The original RGB colors of the pixels are transformed into their HSV color equivalents in the forward color transformation, where the color saturation or luminance of the image pixels is showed.</li>
+    <li>The reverse color transition, from HSV to RGB, is then done to see the result of the change (enhanced image).</li>
+  </ol>
+</ul>
 
+#### a)	BGR2HSV
+To produce an image that is only in the saturation channel, we must first convert our BGR image to HSV color space using cv2.COLOR BGR2HSV method and then split the HSV channels and pick the saturation one using ```hsv[:,:,1]```.
 
 
 
