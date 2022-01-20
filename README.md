@@ -173,10 +173,32 @@ Once we obtained our binary mask, we used the SciPy ndimage.morphology module fo
 Having a more uniform shape makes the next step easier and more reliable. An example of thresholded and binary_fill_holes mask is shown in Figure 8.
 
 <p align="center">
-<img src="Images/contrast stretch 5.PNG?raw=true" width="920" height="380"/>
+<img src="Images/EB fill holes.PNG?raw=true" width="600" height="380"/>
   <br>
-  <em>Figure 8</em>
+  <em>Figure 8. An example of thresholded and binary fill holes mask. The arrows indicate where the hole was present and efficiently filled in the binary mask.</em>
 </p>
+
+G.	cv2.medianBlur()
+Here, the function ```cv2.medianBlur()``` takes the median of all the pixels under the kernel area and the central element is replaced with this median value. This is highly effective against salt-and-pepper noise in an image. Interestingly, this problem, present in the binary image resulting from above thresholding, was successfully solved with this function. In median blurring, the central element is always replaced by some pixel value in the image, reducing the noise effectively. Its kernel size should be a positive odd integer, in this case, in order to avoid folds fades, a kernel size of 3 was used. After smoothing the image, the final mask was extracted with ```cv2.threshold()``` and saved in Noise reduction folder. The Figure 9 shows the resulting images. 
+
+<p align="center">
+<img src="Images/noise red 5.PNG?raw=true" width="600" height="380"/>
+  <br>
+  <em>Figure 9. Example of binary mask before and after noise reduction.</em>
+</p>
+
+H.	cv2.findContours(src, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+The last step of Approach 1 involves the use of OpenCV library that provide cv2.findContours() module for object detection. Contours can be explained simply as a curve joining all the continuous points (along the boundary), having same color or intensity. For better accuracy, we used binary images. 
+In OpenCV, finding contours is like finding white object from black background. So, the object to be found should be white and background should be black. There are three arguments in cv2.findContours() function, first one is source image, second is contour retrieval mode, third is contour approximation method. The function outputs the contours and hierarchy. Contours is a Python list of all the contours in the image. Each individual contour is a Numpy array of x and y coordinates of boundary points of the object. There are two main options for the third argument: cv2.CHAIN_APPROX_NONE and cv2.CHAIN_APPROX_SIMPLE. The former stores all the boundary points of an object but since we just need two end points of a specific object to represent it, cv2.CHAIN_APPROX_SIMPLE was chosen. The latter removes all redundant points and compresses the contour, thereby saving memory.
+Eventually, for a visualization purposes, cv2.drawContours() function is used to draw the contours using the boundary points. Its first argument is the source image, second argument is the contours which should be passed as a Python list, third argument is index of contours (useful when drawing individual contour). To draw all contours, we passed -1 and remaining arguments are color and thickness of the contour line.
+The resulting and final images are saved inside Enhanced folds folder in the new folder Result folds. An example is shown in Figure 10.
+
+<p align="center">
+<img src="Images/noise red 5.PNG?raw=true" width="600" height="380"/>
+  <br>
+  <em>Figure 10. Example of contouring the folds detected. On the left, the original RGB image; on the right the detected folds in green.</em>
+</p>
+
 
 
 
