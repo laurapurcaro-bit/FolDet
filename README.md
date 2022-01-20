@@ -1,4 +1,4 @@
-                          # WORK IN PROGRESS
+                                                   # WORK IN PROGRESS
 # FolDet
 Folds detection in Whole slides images
 
@@ -182,7 +182,7 @@ G.	cv2.medianBlur()
 Here, the function ```cv2.medianBlur()``` takes the median of all the pixels under the kernel area and the central element is replaced with this median value. This is highly effective against salt-and-pepper noise in an image. Interestingly, this problem, present in the binary image resulting from above thresholding, was successfully solved with this function. In median blurring, the central element is always replaced by some pixel value in the image, reducing the noise effectively. Its kernel size should be a positive odd integer, in this case, in order to avoid folds fades, a kernel size of 3 was used. After smoothing the image, the final mask was extracted with ```cv2.threshold()``` and saved in Noise reduction folder. The Figure 9 shows the resulting images. 
 
 <p align="center">
-<img src="Images/noise red 5.PNG?raw=true" width="600" height="380"/>
+<img src="Images/noise red 5_un.PNG?raw=true" width="600" height="380"/>
   <br>
   <em>Figure 9. Example of binary mask before and after noise reduction.</em>
 </p>
