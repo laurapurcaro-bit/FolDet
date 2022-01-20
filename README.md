@@ -194,7 +194,7 @@ Eventually, for a visualization purposes, cv2.drawContours() function is used to
 The resulting and final images are saved inside Enhanced folds folder in the new folder Result folds. An example is shown in Figure 10.
 
 <p align="center">
-<img src="Images/noise red 5.PNG?raw=true" width="600" height="380"/>
+<img src="Images/results EB.PNG?raw=true" width="600" height="380"/>
   <br>
   <em>Figure 10. Example of contouring the folds detected. On the left, the original RGB image; on the right the detected folds in green.</em>
 </p>
