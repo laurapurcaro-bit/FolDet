@@ -82,9 +82,21 @@ b) Crop and keep only tissue area and do downscaling.
 ## 2. Filter application
 ### a) Approach 1: Contrast stretch
 In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
+In order to choose the minimum/maximum value of in_range, we need to have insights regarding the folds intensity values.
+<p align="center">
+<img src="Images/study 5.PNG?raw=true" width="350" height="400"/>
+  <br>
+  <em>Figure 2. Original image</em>
+  <br>
+  <img src="Images/CS exp.png?raw=true" width="500" height="500"/>
+  <br>
+  <em>Figure 3. Example of extracting intensity values from a grayscale image (a). A mask (b) was applied to the original image (c) to better visualize the intensity values of tissue folds in the histogram (d).</em>
+</p>
+
+After that, to extract the binary mask, we passed the output image to the cv2.threshold() function with a threshold of 200 in order to get rid of most of gray areas (tissue area) and leave with darker areas (folds).  Next, we proceed with morphological transformations that we can perform based on the image's shape. These methods are called “closing” and “opening” and tend to come in pairs. The aim of opening is to eliminate false positives. Usually there are several pixels of "noise" in the background, and the idea of "closing" is to eliminate false negatives. Essentially, this is where you have the observed shape, such as our masks, but there are still some black pixels inside the object. Closing would try to clear this up.
 
 <p align="center">
-<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400"/><img src="Images/CS_mod.PNG?raw=true" width="550" height="400"/>
+<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400"/><img src="Images/constrast-stretch-gif.gif?raw=true" width="300" height="400"/>
   <br>
   <em>Figure 2. Contrast stretch workflow</em>
 </p>
