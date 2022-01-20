@@ -84,7 +84,7 @@ b) Crop and keep only tissue area and do downscaling.
 In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
 
 <p align="center">
-<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400"><img src="Images/CS_mod.PNG?raw=true" width="550" height="400">
+<img src="Images/contrast stretch workflow.PNG?raw=true" width="270" height="400"/><img src="Images/CS_mod.PNG?raw=true" width="550" height="400"/>
   <br>
   <em>Figure 2. Contrast stretch workflow</em>
 </p>
@@ -105,22 +105,28 @@ In the contrast stretch approach we tried to take advantage of low intensity pix
   </ol>
 </ul>
 
-#### a)	BGR2HSV
-To produce an image that is only in the saturation channel, we must first convert our BGR image to HSV color space using cv2.COLOR BGR2HSV method and then split the HSV channels and pick the saturation one using ```hsv[:,:,1]```.
+#### BGR2HSV
+To produce an image that is only in the saturation channel, we must first convert our BGR image to HSV color space using ```cv2.COLOR_BGR2HSV``` method and then split the HSV channels and pick the saturation one using ```hsv[:,:,1]```.
 
 <p align="center">
-<img src="Images/HSV images.png?raw=true" width="700" height="400">
+<img src="Images/HSV images.png?raw=true" width="700" height="350"/>
   <br>
-  <em>Figure 2. HSV workflow</em>
+  <em>Figure 3. Example of channel’s types in HSV color space. In order: Hue, Saturation, Value.</em>
+  <br>
 </p>
+
+The resulting image is then read in grayscale mode and thresholded with the method ```cv2.THRESH_BINARY``` of ```cv2.threshold()```. With the performance of the previous method, the thresholding no longer needs to be strong. The above will generate a binary mask, which will be used for object detection in ```cv2.findContours()```. The ```cv2.drawContours()``` function is used to visualize the detected folds. 
 
 <p align="center">
-<img src="Images/HSV workflow.PNG?raw=true" width="270" height="400"><img src="Images/HSV_GIFT.gif" width="300" height="500" />
+<img src="Images/HSV workflow.PNG?raw=true" width="300" height="450"/>&nbsp;&nbsp;<img src="Images/HSV_GIFT.gif" width="300" height="450"/>
   <br>
-  <em>Figure 2. HSV workflow</em>
+  <em>Figure 4. HSV workflow</em>
 </p>
 
+### c) Approach 2: Brightness enhanced
+Contrast enhancement (CE) refers to the image enhancement on contrast by adjusting the dynamic range of pixel intensity distribution. CE plays an important role in the improvement of visual quality for computer vision, pattern recognition and digital image processing. In real applications, we usually encounter digital images with poor contrast or abnormal brightness, which may result from different factors, such as the deficiency of imaging devices. The capturing scenes with low or high illuminance intensity may also lead to reduced contrast quality. Despite of visual quality degradation, low contrast might hinder the further applications of a digital image, including image analysis and object recognition. As such, it is essential to enhance the contrast and brightness of such distorted images before further applications.
 
+In this step we used the function ```ImageEnhance.Brightness()``` from the Python Imaging Library (PIL). This class can be used to control the brightness of an image, i.e., an enhancement factor of 0.0 gives a black image, while a factor of 1.0 gives the original image. First of all, it is required to create an object of the corresponding class in order to enhance the image, enhancer = ImageEnhance.Brightness(im), second enhancer.enhance(factor) is used for the enhancing. Figure 5 displays the difference between a standard enhancing factor of 1.5 and 2. In this approach, a factor of 2 was selected.
 
 
 
