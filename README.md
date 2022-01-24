@@ -194,7 +194,7 @@ Eventually, for a visualization purposes, cv2.drawContours() function is used to
 The resulting and final images are saved inside Enhanced folds folder in the new folder Result folds. An example is shown in Figure 10.
 
 <p align="center">
-<img src="Images/results EB.PNG?raw=true" width="600" height="380"/>
+  <img src="Images/results EB.PNG?raw=true" width="600" height="380"/>
   <br>
   <em>Figure 10. Example of contouring the folds detected. On the left, the original RGB image; on the right the detected folds in green.</em>
 </p>
@@ -208,12 +208,20 @@ To determine the best filter to use for folds detection:
 #### IoU score
 The Intersection-Over-Union (IoU) or Jaccard Index, is one of the most commonly used metrics in semantic segmentation. The IoU is a very straightforward metric that is extremely effective. 
 The IoU is defined as the area of overlap between the predicted segmentation and the ground truth divided by the area of union between the predicted segmentation and the ground truth.
-
-<img align="right" src="doc/subpagelist.png">
-
+<p align="center">
+  <img src="Images/wqWpcLU.png?raw=true" width="200" height="50"/><img src="Images/iou_equation.png?raw=true" width="200" height="100"/>
+   <br>
+  <em>Figure 11. IoU score formula</em>
+</p>
+  
 #### Dice score
 The Dice coefficient is very similar to the IoU score. They are positively correlated, meaning if one metric identifies model A as a better segmenting option than model B, then the other will state the same. Like the IoU, they both range from 0 to 1, with 1 signifying the greatest similarity between predicted and ground truth.
 
+<p align="center">
+  <img src="Images/Dice score math.png?raw=true" width="200" height="50"/><img src="Images/dice coeff.png?raw=true" width="200" height="100"/>
+   <br>
+  <em>Figure 12. Dice score formula </em>
+</p>
 
 
 
