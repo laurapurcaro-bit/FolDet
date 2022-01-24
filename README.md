@@ -246,7 +246,13 @@ Using the information from the ground truth contour (step 1) and the mass center
   <br>
   <img align="center" src="Images/decision boundaries 2.png?raw=true" width="700" height="500"/>
   <br>
-  <em>Figure 14. Localization metric: At the top-left, the ground truth’s binary mask and at the bottom-left, the corresponding folds contoured with rectangles.<br/>
-    Same at the top-right and bottom-right for prediction, with in addition in red the mass center of each object. </em>
+  <em>Figure 14. Localization metric: At the top-left, the ground truth’s binary mask and at the bottom-left, <br/>the corresponding folds contoured with rectangles.
+    Same at the top-right and bottom-right for prediction, with in addition, the mass center in red for each object. </em>
 </p>
+
+### Decision boundaries
+Once the algorithm is able to detect the folds, it would be necessary to set up decision boundaries to decide whether a slide can be accepted, hence good quality, or rejected, hence bad quality, for diagnosis. For this purpose, the number of folds present on each slide, as well as the percentage of the folds area with respect to the total area were calculated for each slide. <br/>
+In order to calculate the total area of the tissue from the original image three main functions were used: `cv2.threshold()`, `cv2.findContours()`, `cv2.contourArea()`.<br/> Likewise, from the predicted mask the total number and area of folds were calculated with `cv2.findContours()`, `cv2.contourArea(contours[idx])` and `len(contours)`.<br/>
+Finally, an excel file that collects all this information will be generated automatically.
+
 
