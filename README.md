@@ -209,20 +209,34 @@ To determine the best filter to use for folds detection:
 The Intersection-Over-Union (IoU) or Jaccard Index, is one of the most commonly used metrics in semantic segmentation. The IoU is a very straightforward metric that is extremely effective. 
 The IoU is defined as the area of overlap between the predicted segmentation and the ground truth divided by the area of union between the predicted segmentation and the ground truth.
 <p align="center">
-  <img src="Images/wqWpcLU.png?raw=true" width="200" height="50"/><img src="Images/iou_equation.png?raw=true" width="200" height="100"/>
+  <img align="center" src="Images/wqWpcLU.png?raw=true" width="200" height="50"/><img align="center" src="Images/iou_equation.png?raw=true" width="250" height="200"/>
    <br>
   <em>Figure 11. IoU score formula</em>
 </p>
-  
+
+This metric ranges from 0–1 (0–100%) with 0 signifying no overlap and 1 signifying perfectly overlapping segmentation. An IoU score greater or equal to 0.5 is normally considered a “good” prediction. In Figure 12 it is shown what a poor, good and excellent score means.
+<p align="center">
+  <img align="center" src="Images/quality_check.png?raw=true" width="400" height="250"/>
+   <br>
+  <em>Figure 12. Example of IoU score evaluation between two images, red and green rectangles. </em>
+</p>
+
 #### Dice score
 The Dice coefficient is very similar to the IoU score. They are positively correlated, meaning if one metric identifies model A as a better segmenting option than model B, then the other will state the same. Like the IoU, they both range from 0 to 1, with 1 signifying the greatest similarity between predicted and ground truth.
 
 <p align="center">
-  <img src="Images/Dice score math.png?raw=true" width="200" height="50"/><img src="Images/dice coeff.png?raw=true" width="200" height="100"/>
+  <img align="center" src="Images/Dice score math.png?raw=true" width="200" height="50"/>&nbsp;<img align="center" src="Images/dice coeff.PNG?raw=true" width="200" height="200"/>
    <br>
-  <em>Figure 12. Dice score formula </em>
+  <em>Figure 13. Dice score formula </em>
 </p>
 
+#### Localization score
+The idea for the Localization score arose from the need for a metric that compares the exact location of predicted folds in an image with the folds on the ground truth image. Hence, the metric will consider only folds that match in both masks and calculate a score over the number of matches. To determine the exact position, the algorithm need to extract the coordinates of the objects in both masks. At the end, the metric is going to output the total number of objects present in the ground truth (total ground truth objects), the unique number of matches between ground truth and prediction, and the percentage of folds detected.
+The formula to calculate the percentage of folds detected is the following:
+<p align="left">
+  <img align="center" src="Images/localization score.png?raw=true" width="200" height="50"/>
+   <br>
+</p>
 
 
 
