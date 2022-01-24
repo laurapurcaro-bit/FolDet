@@ -61,7 +61,7 @@ Developing color filters that can be used to highlight and detect tissue areas c
 
 The algorithm can be divided into:
   - WSI pre-processing
-  - Filter application
+  - Filter application and evaluation
   - WSI classification
 
 ## 1. Whole slide images pre-processing
@@ -84,7 +84,7 @@ b) Crop and keep only tissue area and do downscaling.
 In the contrast stretch approach we tried to take advantage of low intensity pixel values with the ```rescale_intensity()``` function, that stretches or shrinks the intensity levels of the image given a min and max values. As described before, the in_range parameter defines a linear mapping from the original image to the modified image. The intensity range of the input image can be chosen with in_range parameter and it was the only parameter used for the output image. If the minimum/maximum value of in_range is greater than the maximum and less than the minimum value of the image intensity, the intensity level will be clipped, that is, only the intensity level within the range of in_range will be retained.
 In order to choose the minimum/maximum value of in_range, we need to have insights regarding the folds intensity values.
 <p align="center">
-<img src="Images/study 5.PNG?raw=true" width="250" height="300"/><img src="Images/CS exp.png?raw=true" width="370" height="370"/>
+<img src="Images/study 5.PNG?raw=true" width="320" height="370"/>&nbsp;<img src="Images/CS exp.png?raw=true" width="370" height="370"/>
   <br>
   <em>Figure 2. On the left, the original image. On the right, example of extracting intensity values from a grayscale image (a). 
     A mask (b) was applied to the original image (c) to better visualize the intensity values of tissue folds in the histogram (d).</em>
@@ -127,7 +127,7 @@ To produce an image that is only in the saturation channel, we must first conver
 The resulting image is then read in grayscale mode and thresholded with the method ```cv2.THRESH_BINARY``` of ```cv2.threshold()```. With the performance of the previous method, the thresholding no longer needs to be strong. The above will generate a binary mask, which will be used for object detection in ```cv2.findContours()```. The ```cv2.drawContours()``` function is used to visualize the detected folds. 
 
 <p align="center">
-<img src="Images/HSV workflow.PNG?raw=true" width="300" height="450"/>&nbsp;&nbsp;<img src="Images/HSV_GIFT.gif" width="300" height="450"/>
+<img src="Images/HSV workflow.PNG?raw=true" width="300" height="450"/>&nbsp;<img src="Images/HSV_GIFT.gif" width="300" height="450"/>
   <br>
   <em>Figure 5. HSV workflow</em>
 </p>
@@ -198,6 +198,21 @@ The resulting and final images are saved inside Enhanced folds folder in the new
   <br>
   <em>Figure 10. Example of contouring the folds detected. On the left, the original RGB image; on the right the detected folds in green.</em>
 </p>
+
+## 2.2 Filter evaluation
+### Evaluation metrics
+To determine the best filter to use for folds detection:
+- Creation of ground truth images: folds were manually annotated with the ASAP tool and set as ground truth. 
+- Evaluation of predicted folds segmentation accuracy with three metrics: compare ground truth and predicted images with IoU score, Dice score and Localization score (specifically created).
+
+#### IoU score
+The Intersection-Over-Union (IoU) or Jaccard Index, is one of the most commonly used metrics in semantic segmentation. The IoU is a very straightforward metric that is extremely effective. 
+The IoU is defined as the area of overlap between the predicted segmentation and the ground truth divided by the area of union between the predicted segmentation and the ground truth.
+
+<img align="right" src="doc/subpagelist.png">
+
+#### Dice score
+The Dice coefficient is very similar to the IoU score. They are positively correlated, meaning if one metric identifies model A as a better segmenting option than model B, then the other will state the same. Like the IoU, they both range from 0 to 1, with 1 signifying the greatest similarity between predicted and ground truth.
 
 
 
