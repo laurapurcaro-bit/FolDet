@@ -231,12 +231,21 @@ The Dice coefficient is very similar to the IoU score. They are positively corre
 </p>
 
 #### Localization score
-The idea for the Localization score arose from the need for a metric that compares the exact location of predicted folds in an image with the folds on the ground truth image. Hence, the metric will consider only folds that match in both masks and calculate a score over the number of matches. To determine the exact position, the algorithm need to extract the coordinates of the objects in both masks. At the end, the metric is going to output the total number of objects present in the ground truth (total ground truth objects), the unique number of matches between ground truth and prediction, and the percentage of folds detected.
+The idea for the Localization score arose from the need for a metric that compares the exact location of predicted folds in an image with the folds on the ground truth image. Hence, the metric will consider only folds that match in both masks and calculate a score over the number of matches. To determine the exact position, the algorithm need to extract the coordinates of the objects in both masks. At the end, the metric is going to output the total number of objects present in the ground truth (total ground truth objects), the unique number of matches between ground truth and prediction, and the percentage of folds detected.<br/>
 The formula to calculate the percentage of folds detected is the following:
 <p align="left">
-  <img align="center" src="Images/localization score.png?raw=true" width="200" height="50"/>
+  <img align="center" src="Images/localization score.PNG?raw=true" width="200" height="50"/>
    <br>
 </p>
+<br>
 
+Using the information from the ground truth contour (step 1) and the mass center of the predicted mask (step 2) to identify the matching elements (Figure 14). Using a nested loop, for every mass center of each WSI, we iterate through all ground truth objects. A true value corresponds to a match between the detected and the annotated fold. Therefore, for each WSI, every true value will be summarized, allowing the calculation of the percentage of folds detected.<br/>
 
+<p align="center">
+  <img align="center" src="Images/decision boundaries 1.PNG?raw=true" width="100" height="300"/>
+  <br>
+  <img align="center" src="Images/decision boundaries 2.PNG?raw=true" width="100" height="300"/>
+  <br>
+  <em>Figure 14. Localization metric </em>
+</p>
 
